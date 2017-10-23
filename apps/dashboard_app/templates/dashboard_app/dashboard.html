@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hey, {{ request.session.first_name }}</h1>
+
+    <p>Click <a href="/dashboard/comments/{{request.session.id}}">here</a> to see comments on your page</p>
+
+    <p>Or alternatively look at other users' pages</p>
+    <table>
+        <thead>
+            <td>Name</td>
+            <td># of comments on their page</td>
+            <td>Action</td>
+        </thead>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.comments_on.all.count }}</td>
+        <td><a href="/dashboard/comments/{{user.id}}">Go to their page</a></td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <p>Not {{ request.session.first_name }}? Log out <a href="/logout">here</a></p>
+</body>
+</html>
